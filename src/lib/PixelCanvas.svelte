@@ -18,7 +18,7 @@
       id: 'canvas'
     })
 
-    const baseSize = {cols: 40, rows: 40}
+    const baseSize = {cols: 32, rows: 32}
 
     state = new StateHandler
     const colour = colourSelect

@@ -12,7 +12,7 @@ export default class StateHandler {
       y: 0,
       click: false
     }
-    this.scale = 20
+    this.scale = 1
   }
 
   updateMousePosition(e: MouseEvent) {
