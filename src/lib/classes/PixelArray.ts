@@ -74,8 +74,12 @@ export default class PixelArray {
           return
         }
       }
-      const newPixel = new Pixel(colour.r, colour.g, colour.b, colour.a)
-      this.#changePixel(coord.x, coord.y, newPixel)
+      if (colour.a === 0) {
+        this.#changePixel(coord.x, coord.y, new Pixel(0, 0, 0, 0))
+      } else {
+        const newPixel = new Pixel(colour.r, colour.g, colour.b, colour.a)
+        this.#changePixel(coord.x, coord.y, newPixel)
+      }
     }
 
     this.#lastPixel = coord
