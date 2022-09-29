@@ -1,7 +1,7 @@
 <script lang="ts">
   import PixelCanvas from "./lib/PixelCanvas.svelte";
   import UserInterface from "./lib/UserInterface.svelte";
-  import type { RGBA } from "./lib/utils/Interfaces";
+  import type { RGBA, RGBAState } from "./lib/utils/Interfaces";
 
   let pixelCanvas: PixelCanvas;
   const canvasSize = {
@@ -9,14 +9,15 @@
     width: window.innerWidth * 0.75
   }
 
-  let colourSelect: {colour: RGBA, dropper: boolean} = {
+  let colourSelect: RGBAState = {
     colour: {
       r: 128,
       g: 128,
       b: 128,
       a: 255,
     },
-    dropper: false
+    dropper: false,
+    lock: false
   }
 
   function createImage() {

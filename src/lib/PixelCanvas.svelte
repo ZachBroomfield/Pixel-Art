@@ -47,7 +47,7 @@
           }
           state.mouse.click = false
         } else {
-          pixels.editPixels(state.mouse, colourSelect.colour)
+          pixels.editPixels(state.mouse, colourSelect)
         }
         
       }

@@ -23,4 +23,5 @@ export interface RGBA {
 export interface RGBAState {
   colour: RGBA
   dropper: boolean
+  lock: boolean
 }

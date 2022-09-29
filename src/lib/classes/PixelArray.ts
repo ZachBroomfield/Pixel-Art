@@ -1,6 +1,6 @@
 import Array2D from './Array2D'
 import Pixel from './Pixel'
-import type { Point, Dimensions } from '../utils/Interfaces'
+import type { Point, Dimensions, RGBAState, RGBA } from '../utils/Interfaces'
 import type Grid from './Grid'
 
 interface ConstructionParams {
@@ -75,10 +75,21 @@ export default class PixelArray {
     this.#changed.length = 0
   }
 
-  editPixels(point: Point, colour: Colour) {
-    const coord = this.#positionToCoord(point)    
+  editPixels(point: Point, colourSelect: RGBAState) {
+    const coord = this.#positionToCoord(point)
+
+    let colour = colourSelect.colour
 
     if (coord !== null) {
+      if (colourSelect.lock) {
+        const oldColour = this.getColour(coord.x - 1, coord.y - 1)
+        if (oldColour.a !== 0) {
+          if (!(colour.a === 0) || !this.#sameColour(oldColour, colour)) {
+            return
+          }
+        }
+      }
+
       if (this.#lastPixel !== null) {
         if (coord.x === this.#lastPixel.x && coord.y === this.#lastPixel.y) {
           return
@@ -99,7 +110,14 @@ export default class PixelArray {
     this.#lastPixel = null
   }
 
-  
+  #sameColour(one: RGBA, two: RGBA): boolean {
+    return (
+      one.r === two.r &&
+      one.g === two.g &&
+      one.b === two.b
+    )
+  }
+
   #changePixel(x: number, y: number, colour: Pixel) {
     this.values.set(x - 1, y - 1, colour)
     this.#changed.push({x: x - 1, y: y - 1})

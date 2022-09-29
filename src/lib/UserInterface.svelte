@@ -6,9 +6,8 @@
 
   export let selection: RGBAState
 
-
   let eraserActive = false
-
+  
   function handleEraser() {
     if (selection.colour.a === 0) {
       selection.colour.a = 255
@@ -28,6 +27,10 @@
       selection.colour.a = 255
     }
   }
+
+  function handleLock() {
+    selection.lock = !selection.lock
+  }
 </script>
 
 <div class="min-w-min max-w-min">
@@ -45,8 +48,9 @@
 
   <div class="my-4 ml-4 btn-group btn-group-vertical">
     <Button on:eraser={handleEraser} messageName={"eraser"} text={"Eraser"} bind:active={eraserActive} />
-    <Button on:select={handleSelect} messageName={"select"} text={"Dropper"} bind:active={selection.dropper} />
-    <Button on:createImage messageName={"createImage"} text={"Download"} active={false} />
+    <Button on:select={handleSelect} messageName={"select"} text={"Colour Dropper"} bind:active={selection.dropper} />
+    <Button on:lock={handleLock} messageName={"lock"} text={"Lock other colours"} bind:active={selection.lock} />
+    <Button on:createImage messageName={"createImage"} text={"Download Image"} active={false} />
   </div>
   
 </div>
