@@ -20,7 +20,7 @@ export default class GridFactory {
 
     const spacing = this.#calcSpacing(dimensions, canvasSize)
 
-    const topLeft = this.#calcTopLeft(dimensions, spacing, midPoint)
+    const topLeft = this.#calcTopLeft(dimensions, spacing, midPoint, canvasSize)
 
     const gridLines = this.#createGridLines(dimensions, spacing, topLeft)
 
@@ -114,11 +114,15 @@ export default class GridFactory {
   static #calcTopLeft(
     dimensions: Dimensions,
     spacing: number,
-    midPoint: Vector2D
+    midPoint: Vector2D,
+    canvasSize: Size
   ): Vector2D {
-
+    const x = Math.max(
+      Math.round(midPoint.x - (dimensions.cols * spacing) / 2),
+      Math.round(canvasSize.width - 100 - (dimensions.cols * spacing))
+    )
     return new Vector2D({
-      x: Math.round(midPoint.x - (dimensions.cols * spacing) / 2),
+      x: x,
       y: Math.round(midPoint.y - (dimensions.rows * spacing) / 2)
     })
   }

@@ -12,6 +12,6 @@
   }
 </script>
 
-<button on:click={handleClick} class="btn" class:btn-primary="{active}">
+<button on:click={handleClick} class="btn btn-lg" class:btn-primary="{active}">
   {text}
 </button>

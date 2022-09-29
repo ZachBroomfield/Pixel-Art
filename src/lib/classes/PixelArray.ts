@@ -42,6 +42,16 @@ export default class PixelArray {
     return this.values.get(x, y)
   }
 
+  getColourFromMouse(point: Point): Pixel | null {
+    const coord = this.#positionToCoord(point)
+
+    if (coord !== null) {
+      return this.getColour(coord.x - 1, coord.y - 1)
+    } else {
+      return null
+    }
+  }
+
   getLength() {
     return this.cols * this.rows
   }

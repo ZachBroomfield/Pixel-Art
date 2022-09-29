@@ -3,33 +3,46 @@
   import UserInterface from "./lib/UserInterface.svelte";
   import type { RGBA } from "./lib/utils/Interfaces";
 
-  let pixelCanvas;
-
+  let pixelCanvas: PixelCanvas;
   const canvasSize = {
     height: window.innerHeight,
-    width: window.innerWidth * 0.8
+    width: window.innerWidth * 0.75
   }
 
-  let colourSelect: RGBA = {
-    r: 128,
-    g: 128,
-    b: 128,
-    a: 255
+  let colourSelect: {colour: RGBA, dropper: boolean} = {
+    colour: {
+      r: 128,
+      g: 128,
+      b: 128,
+      a: 255,
+    },
+    dropper: false
   }
 
   function createImage() {
     pixelCanvas.createImage()
   }
+
+  addEventListener('keypress', () => {
+    console.log(colourSelect)
+  })
 </script>
 
 
-<div class="flex flex-row">
-  <div class="basis-4/5">
-    <PixelCanvas {canvasSize} {colourSelect} bind:this={pixelCanvas} />
+<div class="flex">
+  <div class="flex-1">
+    <PixelCanvas
+      {canvasSize}
+      bind:colourSelect={colourSelect}
+      bind:this={pixelCanvas}
+    />
   </div>
 
-  <div class="basis-1/5 my-auto">
-    <UserInterface bind:selection={colourSelect} on:createImage={createImage} />
+  <div class="flex-1 my-auto">
+    <UserInterface
+      bind:selection={colourSelect}
+      on:createImage={createImage}
+    />
   </div>
 </div>
 

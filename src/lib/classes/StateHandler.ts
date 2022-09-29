@@ -6,13 +6,14 @@ export default class StateHandler {
   }
   scale: number
 
-  constructor() {
+  constructor(scale: number) {
     this.mouse = {
       x: 0,
       y: 0,
       click: false
     }
-    this.scale = 1
+    this.scale = scale
+
   }
 
   updateMousePosition(e: MouseEvent) {

@@ -5,11 +5,11 @@
   import PixelArray from "./classes/PixelArray"
   import StateHandler from "./classes/StateHandler";
   import { addEventListeners } from "./utils/EventListeners";
-  import type { RGBA, Size } from "./utils/Interfaces";
+  import type { RGBAState, Size } from "./utils/Interfaces";
   import ImageCreator from "./classes/ImageCreator";
 
   export let canvasSize: Size;
-  export let colourSelect: RGBA;
+  export let colourSelect: RGBAState;
   let state: StateHandler, pixels: PixelArray;
   
   onMount(() => {
@@ -20,8 +20,7 @@
 
     const baseSize = {cols: 32, rows: 32}
 
-    state = new StateHandler
-    const colour = colourSelect
+    state = new StateHandler(20)
 
     const grid = GridFactory.create({
       dimensions: baseSize,
@@ -40,15 +39,25 @@
 
     function animate() {
       if (state.mouse.click) {
-        pixels.editPixels(state.mouse, colour)
+        if(colourSelect.dropper) {
+          const newColour = pixels.getColourFromMouse(state.mouse)
+          if (newColour !== null && newColour.a !== 0) {
+            colourSelect.colour = newColour
+            colourSelect.dropper = false
+          }
+          state.mouse.click = false
+        } else {
+          pixels.editPixels(state.mouse, colourSelect.colour)
+        }
+        
       }
 
       pixels.drawChanged(canvasHandler.getCtx())
       requestAnimationFrame(animate)
     }
 
-    initialDraw()
     addEventListeners(state, pixels)
+    initialDraw()
     animate()
   });
 

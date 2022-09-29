@@ -19,3 +19,8 @@ export interface RGBA {
   b: number
   a: number
 }
+
+export interface RGBAState {
+  colour: RGBA
+  dropper: boolean
+}
